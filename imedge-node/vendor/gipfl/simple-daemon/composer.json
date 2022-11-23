@@ -1,0 +1,37 @@
+{
+    "name": "gipfl/simple-daemon",
+    "description": "Run a simple daemon",
+    "type": "library",
+    "license": "MIT",
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php":"7.4.12"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "gipfl\\SimpleDaemon\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Thomas Gelf",
+            "email": "thomas@gelf.net"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-pcntl": "*",
+        "evenement/evenement": "*",
+        "gipfl/cli": "^0.7",
+        "gipfl/json": ">=0.2",
+        "gipfl/log": "^0.7",
+        "gipfl/systemd": ">=0.3",
+        "psr/log": ">=1.0",
+        "react/event-loop": "^1.3",
+        "react/promise": ">=2",
+        "react/promise-timer": ">=1.9",
+        "ulrichsg/getopt-php": ">=4.0"
+    }
+}

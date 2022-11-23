@@ -1,0 +1,37 @@
+{
+  "name": "gipfl/distance-router",
+  "description": "Simple distance-vectory-based routing logic",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Thomas Gelf",
+      "email": "thomas@gelf.net"
+    }
+  ],
+  "config": {
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "gipfl\\DistanceRouter\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "gipfl\\Tests\\DistanceRouter\\": "tests/"
+    }
+  },
+
+  "require": {
+    "php": ">=7.4",
+    "gipfl/json": "^0.2",
+    "ramsey/uuid": "^4",
+    "squizlabs/php_codesniffer": "^3"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1",
+    "phpunit/php-code-coverage": "^9.0 || ^10",
+    "phpunit/phpunit": "^9 || ^10"
+  }
+}
