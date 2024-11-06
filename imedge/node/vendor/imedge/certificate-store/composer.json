@@ -1,0 +1,41 @@
+{
+  "name": "imedge/certificate-store",
+  "description": "Deal with x509 certificates",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Thomas Gelf",
+      "email": "thomas@gelf.net"
+    }
+  ],
+  "config": {
+    "sort-packages": true,
+    "platform": {
+      "php": "8.1.2"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "IMEdge\\CertificateStore\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "IMEdge\\Tests\\CertificateStore\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">=8.1.2",
+    "ext-gmp": "*",
+    "ext-mbstring": "*",
+    "ext-openssl": "*",
+    "sop/x509": "^0.7"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1",
+    "phpunit/php-code-coverage": "^10",
+    "phpunit/phpunit": "^10",
+    "squizlabs/php_codesniffer": "^3"
+  }
+}

@@ -1,0 +1,36 @@
+{
+    "name": "imedge/protocol-netstring",
+    "description": "Asynchronous NetString implementation for AMPHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thomas Gelf",
+            "email": "thomas@gelf.net"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "IMEdge\\Protocol\\NetString\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IMEdge\\Tests\\Protocol\\NetString\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=8.1",
+        "ext-ctype": "*",
+        "amphp/byte-stream": "^2.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.11",
+        "phpunit/phpunit": "^10.3",
+        "squizlabs/php_codesniffer": "^3.7",
+        "symplify/easy-coding-standard": "^12.0.8"
+    }
+}

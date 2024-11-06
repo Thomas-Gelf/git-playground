@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Icinga\\Module\\Idbdash\\": "library/Idbdash"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    }
+}

@@ -1,0 +1,78 @@
+#!/usr/bin/env php
+<?php
+
+use GetOpt\ArgumentException;
+use GetOpt\GetOpt;
+use GetOpt\Option;
+use IMEdge\Log\ProcessLogger;
+use IMEdge\Node\Application;
+use IMEdge\Node\ApplicationContext;
+use IMEdge\Node\Command\CertificateCommand;
+use IMEdge\Node\Command\ConnectCommand;
+use IMEdge\Node\Command\CsrCommand;
+use IMEdge\Node\Command\DaemonCommand;
+use IMEdge\Node\Command\DisconnectCommand;
+use IMEdge\Node\Command\ListenCommand;
+use IMEdge\Node\Command\MetricsCommand;
+use IMEdge\Node\Command\RpcCommand;
+use IMEdge\Node\Command\SignCommand;
+use IMEdge\Node\Command\TrustCommand;
+use IMEdge\Node\UtilityClasses\Cli;
+use IMEdge\SimpleDaemon\Process;
+use Psr\Log\LoggerAwareInterface;
+use Revolt\EventLoop;
+
+error_reporting(E_ALL | E_STRICT);
+
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+ApplicationContext::initializeFeatureAutoloaders();
+
+Process::setTitle(Application::PROCESS_NAME);
+Cli::clearProxySettings();
+EventLoop::setErrorHandler(function (Throwable $e) {
+    echo 'EventLoop error handler: ' . $e->getMessage() . ' - ' . $e->getFile() . ':' . $e->getLine() . "\n";
+    echo $e->getTraceAsString();
+    exit(1);
+});
+
+$options = new GetOpt(null, [GetOpt::SETTING_STRICT_OPERANDS => true]);
+$options->addOptions([
+    Option::create('v', 'verbose')->setDescription('Enable verbose logging'),
+    Option::create('d', 'debug')->setDescription('Enable debug logging')
+]);
+$options->addCommands([
+    new ConnectCommand(),
+    new DisconnectCommand(),
+    new DaemonCommand(),
+    new ListenCommand(),
+    new MetricsCommand(),
+    new RpcCommand(),
+    new CsrCommand(),
+    new CertificateCommand(),
+    new SignCommand(),
+    new TrustCommand(),
+]);
+
+try {
+    $options->process();
+    $logger = ProcessLogger::create(Application::LOG_NAME, $options);
+    Application::checkRequirements($logger);
+
+    $command = $options->getCommand();
+    if (!$command) {
+        echo $options->getHelpText();
+        exit(1);
+    }
+
+    if ($command instanceof LoggerAwareInterface) {
+        $command->setLogger($logger);
+    }
+    call_user_func($command->getHandler(), $options);
+} catch (ArgumentException $e) {
+    Cli::writeError($e->getMessage());
+    echo PHP_EOL . $options->getHelpText();
+    exit(1);
+} catch (Throwable $e) {
+    Cli::writeError($e->getMessage());
+    exit(1);
+}
